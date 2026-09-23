@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#075e54">
+<title>অভিযোগ বাংলাদেশ</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Noto Sans Bengali","Arial",sans-serif}
+body{background:#f4f7f6;color:#17201e}button,input,textarea,select{font:inherit}button{cursor:pointer}
+.app{max-width:480px;margin:auto;min-height:100vh;background:#f7f9f8;box-shadow:0 0 25px rgba(0,0,0,.08)}
+.hidden{display:none!important}
+.header{background:#075e54;color:white;padding:16px;position:sticky;top:0;z-index:20}
+.header-row{display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px}.logo{width:45px;height:45px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;color:#075e54;font-weight:bold;overflow:hidden}.brand-title{font-size:18px;font-weight:700}.brand-subtitle{font-size:11px;opacity:.85}
+.icon-btn{border:0;background:rgba(255,255,255,.15);color:white;width:40px;height:40px;border-radius:50%}
+.auth{min-height:100vh;padding:30px 20px;display:flex;align-items:center;justify-content:center}.auth-card{width:100%;background:white;padding:25px;border-radius:22px;box-shadow:0 10px 35px rgba(0,0,0,.08)}.auth-logo{width:85px;height:85px;margin:0 auto 15px;border-radius:50%;background:#075e54;color:white;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:22px;overflow:hidden}.auth h1{text-align:center;font-size:24px;color:#075e54}.auth p{text-align:center;color:#687572;margin:7px 0 22px}
+.input{width:100%;border:1px solid #d8e0dd;background:#fbfcfc;border-radius:12px;padding:13px;margin-bottom:12px;outline:none}.input:focus{border-color:#075e54}
+.primary{width:100%;border:0;background:#075e54;color:white;border-radius:12px;padding:14px;font-weight:700;margin-top:5px}.secondary{width:100%;border:1px solid #075e54;background:white;color:#075e54;border-radius:12px;padding:13px;font-weight:700;margin-top:10px}.link{border:0;background:none;color:#075e54;margin-top:15px}
+.content{padding:16px;padding-bottom:90px}.welcome{margin:5px 0 18px}.welcome h2{font-size:22px}.welcome p{color:#697571;margin-top:3px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.menu-card{border:0;background:white;border-radius:17px;padding:18px 10px;min-height:115px;box-shadow:0 4px 15px rgba(0,0,0,.05);text-align:center}.menu-icon{font-size:31px;margin-bottom:8px}.menu-card b{font-size:14px}
+.section{margin-top:22px}.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.section-title h3{font-size:18px}.card{background:white;border-radius:17px;padding:16px;margin-bottom:12px;box-shadow:0 4px 15px rgba(0,0,0,.05)}.info-card{background:#e7f5f2;border-left:4px solid #075e54}.warning{background:#fff4df;border-left:4px solid #e49b19}.danger{background:#fff0f0;border-left:4px solid #d33}
+.form-title{font-size:22px;margin-bottom:5px}.form-subtitle{color:#687572;font-size:13px;margin-bottom:18px}label{display:block;margin:12px 0 6px;font-weight:600;font-size:14px}textarea.input{min-height:120px;resize:vertical}.file-box{border:2px dashed #c9d7d3;border-radius:13px;padding:20px;text-align:center;color:#63716d}
+.complaint{background:white;border-radius:16px;padding:15px;margin-bottom:12px;box-shadow:0 4px 14px rgba(0,0,0,.05)}.complaint-head{display:flex;justify-content:space-between;gap:10px}.complaint-id{font-size:12px;color:#687572}.badge{display:inline-block;padding:5px 9px;border-radius:20px;font-size:11px;background:#e8f4f1;color:#075e54}.badge-red{background:#ffe5e5;color:#b50000}.badge-orange{background:#fff0d6;color:#a35a00}.timeline{margin-top:15px;border-left:2px solid #c8d8d4;padding-left:15px}.timeline-item{position:relative;margin-bottom:16px}.timeline-item:before{content:"";width:9px;height:9px;background:#075e54;border-radius:50%;position:absolute;left:-21px;top:5px}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:white;border-top:1px solid #e3e9e7;display:flex;justify-content:space-around;padding:8px 3px;z-index:30}.nav-btn{border:0;background:none;color:#687572;font-size:11px;padding:5px}.nav-btn.active{color:#075e54;font-weight:bold}.nav-icon{display:block;font-size:21px}
+.admin-stat{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:white;border-radius:15px;padding:15px;box-shadow:0 3px 12px rgba(0,0,0,.05)}.stat strong{display:block;font-size:25px;color:#075e54}.admin-action{width:100%;padding:13px;border:0;background:white;text-align:left;border-radius:12px;margin-bottom:8px}
+.toast{position:fixed;bottom:75px;left:50%;transform:translateX(-50%);background:#17201e;color:white;padding:12px 18px;border-radius:25px;z-index:100;display:none;max-width:90%;text-align:center}.toast.show{display:block}
+@media(max-width:360px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<section id="authScreen" class="auth hidden">
+<div class="auth-card" id="loginBox">
+<div class="auth-logo">অভি</div><h1>অভিযোগ বাংলাদেশ</h1><p>অযথা মামলা, অযথা হামলা — ন্যায়ের পাশে</p>
+<input id="loginEmail" class="input" type="email" placeholder="ইমেইল">
+<input id="loginPassword" class="input" type="password" placeholder="পাসওয়ার্ড">
+<button class="primary" onclick="login()">লগইন</button>
+<button class="link" onclick="showRegister()">নতুন অ্যাকাউন্ট তৈরি করুন</button>
+<button class="link" onclick="forgotPassword()">পাসওয়ার্ড ভুলে গেছেন?</button>
+<button class="link" onclick="showAdminLogin()">🛡️ Admin Login</button>
+</div>
+<div class="auth-card hidden" id="registerBox">
+<div class="auth-logo">অভি</div><h1>নিবন্ধন</h1><p>আপনার তথ্য দিয়ে অ্যাকাউন্ট তৈরি করুন</p>
+<input id="regName" class="input" placeholder="পূর্ণ নাম"><input id="regPhone" class="input" placeholder="মোবাইল নম্বর"><input id="regEmail" class="input" type="email" placeholder="ইমেইল"><input id="regPassword" class="input" type="password" placeholder="পাসওয়ার্ড"><input id="regConfirm" class="input" type="password" placeholder="পাসওয়ার্ড নিশ্চিত করুন">
+<select id="regDistrict" class="input"><option value="">জেলা নির্বাচন করুন</option><option>কুমিল্লা</option><option>ঢাকা</option><option>চট্টগ্রাম</option><option>ফেনী</option><option>নোয়াখালী</option><option>ব্রাহ্মণবাড়িয়া</option><option>সিলেট</option><option>রাজশাহী</option></select>
+<input id="regUpazila" class="input" placeholder="উপজেলা"><textarea id="regAddress" class="input" placeholder="ঠিকানা"></textarea>
+<button class="primary" onclick="registerUser()">অ্যাকাউন্ট তৈরি করুন</button><button class="link" onclick="showLogin()">ইতিমধ্যে অ্যাকাউন্ট আছে? লগইন</button>
+</div>
+<div class="auth-card hidden" id="adminLoginBox">
+<div class="auth-logo">🛡️</div><h1>Admin Login</h1><p>শুধু অনুমোদিত Admin/Super Admin-এর জন্য</p>
+<input id="adminEmail" class="input" type="email" placeholder="Admin Email">
+<input id="adminPassword" class="input" type="password" placeholder="Password">
+<button class="primary" onclick="adminLogin()">Admin Login</button>
+<button class="link" onclick="showLogin()">← User Login</button>
+</div>
+</section>
+
+<section id="mainApp">
+<header class="header"><div class="header-row"><div class="brand"><div class="logo">অভি</div><div><div class="brand-title">অভিযোগ বাংলাদেশ</div><div class="brand-subtitle">অভিযোগ বাংলাদেশ সংগঠন</div></div></div><button class="icon-btn" onclick="openPage('notifications')">🔔</button></div></header>
+<main class="content">
+
+<div id="homePage" class="page">
+<div class="welcome"><h2>আসসালামু আলাইকুম 👋</h2><p id="welcomeName">স্বাগতম</p></div>
+<div class="card info-card"><b>গুরুত্বপূর্ণ তথ্য</b><p style="margin-top:7px;font-size:13px">এই অ্যাপটি একটি বেসরকারি অভিযোগ ও মানবিক সহায়তা প্ল্যাটফর্ম। এটি কোনো সরকারি আইন প্রয়োগকারী সংস্থা নয়।</p></div>
+<div class="grid">
+<button class="menu-card" onclick="openPage('complaint')"><div class="menu-icon">📝</div><b>অভিযোগ করুন</b></button>
+<button class="menu-card" onclick="openPage('tracking')"><div class="menu-icon">🔎</div><b>অভিযোগ ট্র্যাক করুন</b></button>
+<button class="menu-card" onclick="openPage('myComplaints')"><div class="menu-icon">📋</div><b>আমার অভিযোগ</b></button>
+<button class="menu-card" onclick="openPage('urgent')"><div class="menu-icon">🚨</div><b>জরুরি অভিযোগ</b></button>
+<button class="menu-card" onclick="openPage('notices')"><div class="menu-icon">📢</div><b>নোটিশ</b></button>
+<button class="menu-card" onclick="openPage('blood')"><div class="menu-icon">🩸</div><b>রক্ত সহায়তা</b></button>
+<button class="menu-card" onclick="openPage('humanitarian')"><div class="menu-icon">🤝</div><b>মানবিক সহায়তা</b></button>
+<button class="menu-card" onclick="openPage('volunteers')"><div class="menu-icon">👥</div><b>স্বেচ্ছাসেবক</b></button>
+<button class="menu-card" onclick="openPage('contact')"><div class="menu-icon">📞</div><b>যোগাযোগ</b></button>
+<button class="menu-card" onclick="openPage('profile')"><div class="menu-icon">👤</div><b>প্রোফাইল</b></button>
+</div>
+<div class="section"><div class="section-title"><h3>সাম্প্রতিক অভিযোগ</h3><button class="link" onclick="openPage('myComplaints')">সব দেখুন</button></div><div id="recentComplaints"><div class="card">এখনো কোনো অভিযোগ জমা দেওয়া হয়নি।</div></div></div>
+</div>
+
+<div id="complaintPage" class="page hidden">
+<h2 class="form-title">অভিযোগ জমা দিন</h2><p class="form-subtitle">আপনার অভিযোগের সঠিক তথ্য প্রদান করুন।</p>
+<div class="card warning"><b>গোপনীয়তা</b><p style="font-size:13px;margin-top:5px">অভিযোগে অন্য ব্যক্তির অপ্রয়োজনীয় ব্যক্তিগত তথ্য প্রকাশ করবেন না।</p></div>
+<label>অভিযোগের শিরোনাম *</label><input id="cTitle" class="input" placeholder="যেমন: জমি সংক্রান্ত অভিযোগ">
+<label>অভিযোগের ধরন *</label><select id="cCategory" class="input"><option value="">ক্যাটাগরি নির্বাচন করুন</option><option>আইন ও নিরাপত্তা</option><option>অযথা মামলা</option><option>অযথা হামলা</option><option>মারধর</option><option>হুমকি</option><option>হয়রানি</option><option>জোরপূর্বক দখল</option><option>চাঁদাবাজি</option><option>প্রতারণা</option><option>নিখোঁজ ব্যক্তি</option><option>সরকারি সেবা</option><option>ভূমি সেবা</option><option>জন্ম নিবন্ধন</option><option>NID সংক্রান্ত সমস্যা</option><option>দুর্নীতি ও অনিয়ম</option><option>ঘুষ দাবি</option><option>স্বজনপ্রীতি</option><option>শিক্ষা</option><option>স্বাস্থ্য</option><option>রাস্তা ও অবকাঠামো</option><option>পানি ও বিদ্যুৎ</option><option>পরিবেশ</option><option>নারী ও শিশু সুরক্ষা</option></select>
+<label>বিস্তারিত অভিযোগ *</label><textarea id="cDetails" class="input" placeholder="ঘটনার বিস্তারিত লিখুন"></textarea>
+<label>ঘটনার তারিখ</label><input id="cDate" class="input" type="date"><label>ঘটনার সময়</label><input id="cTime" class="input" type="time">
+<label>জেলা</label><input id="cDistrict" class="input" placeholder="জেলা"><label>উপজেলা</label><input id="cUpazila" class="input" placeholder="উপজেলা"><label>ইউনিয়ন / পৌরসভা</label><input id="cUnion" class="input" placeholder="ইউনিয়ন / পৌরসভা"><label>এলাকা</label><input id="cArea" class="input" placeholder="এলাকার নাম"><label>ঘটনার স্থান</label><input id="cPlace" class="input" placeholder="ঘটনার স্থান"><label>অভিযুক্ত ব্যক্তি / প্রতিষ্ঠানের নাম</label><input id="cAccused" class="input" placeholder="নাম"><label>যোগাযোগের তথ্য</label><input id="cContact" class="input" placeholder="প্রয়োজনীয় যোগাযোগ তথ্য"><label>সাক্ষীর তথ্য</label><textarea id="cWitness" class="input" placeholder="সাক্ষী থাকলে তথ্য দিন"></textarea><label>প্রমাণের বিবরণ</label><textarea id="cEvidenceInfo" class="input" placeholder="আপনার কাছে কী ধরনের প্রমাণ আছে?"></textarea>
+<label>প্রমাণ সংযুক্ত করুন</label><div class="file-box">📎<br>ছবি / PDF / Document<br><br><input type="file" accept="image/*,.pdf,.doc,.docx"></div>
+<label>পরিচয় গোপন রাখতে চান?</label><select id="anonymous" class="input"><option value="no">না</option><option value="yes">হ্যাঁ</option></select>
+<label>অগ্রাধিকার</label><select id="priority" class="input"><option>Normal</option><option>Important</option><option>Urgent</option><option>Emergency</option></select>
+<button class="primary" onclick="submitComplaint()">অভিযোগ জমা দিন</button>
+</div>
+
+<div id="trackingPage" class="page hidden"><h2 class="form-title">অভিযোগ ট্র্যাক করুন</h2><p class="form-subtitle">আপনার Complaint ID দিয়ে অভিযোগের অবস্থা দেখুন।</p><input id="trackingId" class="input" placeholder="যেমন: BD-2026-000001"><button class="primary" onclick="trackComplaint()">ট্র্যাক করুন</button><div id="trackingResult" style="margin-top:15px"></div></div>
+
+<div id="myComplaintsPage" class="page hidden"><h2 class="form-title">আমার অভিযোগ</h2><div class="grid" style="margin-bottom:15px"><button class="menu-card" onclick="filterComplaints('all')">সব</button><button class="menu-card" onclick="filterComplaints('pending')">Pending</button><button class="menu-card" onclick="filterComplaints('processing')">Processing</button><button class="menu-card" onclick="filterComplaints('resolved')">Resolved</button></div><div id="complaintList"></div></div>
+
+<div id="notificationsPage" class="page hidden"><h2 class="form-title">নোটিফিকেশন</h2><div class="card">🔔 অভিযোগ জমা দিলে এখানে আপডেট দেখা যাবে।</div></div>
+
+<div id="profilePage" class="page hidden"><h2 class="form-title">আমার প্রোফাইল</h2><div class="card" style="text-align:center"><div class="auth-logo">👤</div><h3 id="profileName">অতিথি</h3><p id="profileEmail">লগইন না করা অবস্থায় অতিথি হিসেবে ব্যবহার করছেন</p></div><div id="guestProfileActions"><button class="primary" onclick="openLogin()">লগইন করুন</button><button class="secondary" onclick="openRegister()">নতুন অ্যাকাউন্ট তৈরি করুন</button></div><div id="userProfileFields" class="hidden"><input id="profilePhone" class="input" placeholder="মোবাইল নম্বর"><input id="profileDistrict" class="input" placeholder="জেলা"><input id="profileUpazila" class="input" placeholder="উপজেলা"><textarea id="profileAddress" class="input" placeholder="ঠিকানা"></textarea><button class="primary" onclick="saveProfile()">প্রোফাইল আপডেট</button><button class="secondary" onclick="logout()">লগআউট</button></div></div>
+
+<div id="bloodPage" class="page hidden"><h2 class="form-title">🩸 রক্ত সহায়তা</h2><div class="card info-card"><b>রক্তদাতা খুঁজুন</b><p style="margin-top:6px">প্রয়োজনীয় রক্তের গ্রুপ ও এলাকা নির্বাচন করুন।</p></div><select class="input"><option>রক্তের গ্রুপ</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select><input class="input" placeholder="জেলা"><button class="primary" onclick="toast('রক্তদাতার তথ্য খোঁজা হচ্ছে')">খুঁজুন</button><div class="card">🔒 ব্যক্তিগত ফোন নম্বর অনুমতি ছাড়া প্রকাশ করা হবে না।</div></div>
+
+<div id="humanitarianPage" class="page hidden"><h2 class="form-title">🤝 মানবিক সহায়তা</h2><div class="grid"><button class="menu-card">🩸<br><b>Blood Donation</b></button><button class="menu-card">🏥<br><b>Medical Assistance</b></button><button class="menu-card">🍚<br><b>Food Distribution</b></button><button class="menu-card">📚<br><b>Education Assistance</b></button><button class="menu-card">🧥<br><b>Winter Clothing</b></button><button class="menu-card">🏠<br><b>Relief Distribution</b></button></div></div>
+
+<div id="volunteersPage" class="page hidden"><h2 class="form-title">👥 স্বেচ্ছাসেবক</h2><div class="card"><h3>স্বেচ্ছাসেবক ব্যবস্থাপনা</h3><p style="margin-top:7px">দক্ষতা, এলাকা ও রক্তের গ্রুপ অনুযায়ী অনুমোদিত স্বেচ্ছাসেবকদের তথ্য এখানে থাকবে।</p></div></div>
+
+<div id="contactPage" class="page hidden"><h2 class="form-title">📞 যোগাযোগ</h2><div class="card"><h3>অভিযোগ বাংলাদেশ সংগঠন</h3><p style="margin-top:10px">মানুষের পাশে, মানবতার জন্য।</p><p style="margin-top:10px">📧 Email: info@example.com</p><p style="margin-top:6px">📞 Hotline: 00000000000</p></div></div>
+
+<div id="noticesPage" class="page hidden"><h2 class="form-title">📢 নোটিশ</h2><div class="card">বর্তমানে কোনো নতুন নোটিশ নেই।</div></div>
+
+<div id="urgentPage" class="page hidden"><h2 class="form-title">🚨 জরুরি অভিযোগ</h2><div class="card danger"><b>গুরুত্বপূর্ণ সতর্কতা</b><p style="margin-top:8px;font-size:13px">এই অ্যাপ নিজে জরুরি আইন প্রয়োগকারী বা উদ্ধারকারী সংস্থা নয়। জীবন বা নিরাপত্তার তাৎক্ষণিক ঝুঁকি থাকলে সংশ্লিষ্ট সরকারি জরুরি কর্তৃপক্ষের সঙ্গে সরাসরি যোগাযোগ করুন।</p></div><button class="primary" onclick="openPage('complaint')">জরুরি অভিযোগ জমা দিন</button></div>
+
+<div id="adminPage" class="page hidden">
+<h2 class="form-title">🛡️ Admin Dashboard</h2>
+<div class="card info-card"><b id="adminRoleLabel">Admin Panel</b><p style="font-size:13px;margin-top:5px">শুধু অনুমোদিত Firebase user role অনুযায়ী Admin features ব্যবহার করা যাবে।</p></div>
+<div class="admin-stat">
+<div class="stat"><small>Total Complaints</small><strong id="statTotal">0</strong></div>
+<div class="stat"><small>Pending</small><strong id="statPending">0</strong></div>
+<div class="stat"><small>Processing</small><strong id="statProcessing">0</strong></div>
+<div class="stat"><small>Resolved</small><strong id="statResolved">0</strong></div>
+</div>
+<div class="section"><div class="card">
+<button class="admin-action" onclick="adminComplaints()">📋 অভিযোগ ব্যবস্থাপনা</button>
+<button class="admin-action" onclick="adminUsers()">👥 User Management</button>
+<button class="admin-action" onclick="toast('Member Management প্রস্তুত')">🧑‍💼 Member Management</button>
+<button class="admin-action" onclick="toast('Volunteer Management প্রস্তুত')">🤝 Volunteer Management</button>
+<button class="admin-action" onclick="toast('Blood Management প্রস্তুত')">🩸 Blood Management</button>
+<button class="admin-action" onclick="toast('Category Management প্রস্তুত')">🗂 Category Management</button>
+<div id="superAdminActions">
+<button class="admin-action" onclick="toast('Admin Permissions প্রস্তুত')">🔐 Admin Permissions</button>
+<button class="admin-action" onclick="toast('Audit Logs প্রস্তুত')">📝 Audit Logs</button>
+<button class="admin-action" onclick="toast('Settings প্রস্তুত')">⚙️ Settings</button>
+</div>
+</div></div>
+<div id="adminComplaintList"></div>
+<div id="adminUserList"></div>
+</div>
+
+</main>
+<nav class="bottom-nav"><button class="nav-btn active" onclick="openPage('home')"><span class="nav-icon">🏠</span>হোম</button><button class="nav-btn" onclick="openPage('myComplaints')"><span class="nav-icon">📋</span>অভিযোগ</button><button class="nav-btn" onclick="openPage('complaint')"><span class="nav-icon">➕</span>জমা</button><button class="nav-btn" onclick="openPage('notifications')"><span class="nav-icon">🔔</span>নোটিশ</button><button class="nav-btn" onclick="openPage('profile')"><span class="nav-icon">👤</span>প্রোফাইল</button></nav>
+</section>
+<div id="toast" class="toast"></div>
+
+<script>
+let currentUser=null;
+let complaints=JSON.parse(localStorage.getItem("complaints")||"[]");
+let users=JSON.parse(localStorage.getItem("users")||"[]");
+
+function openLogin(){authScreen.classList.remove("hidden");mainApp.classList.add("hidden");showLogin()}
+function openRegister(){authScreen.classList.remove("hidden");mainApp.classList.add("hidden");showRegister()}
+function showAdminLogin(){
+ loginBox.classList.add("hidden");registerBox.classList.add("hidden");adminLoginBox.classList.remove("hidden");
+}
+function adminLogin(){
+ const email=adminEmail.value.trim(),password=adminPassword.value;
+ if(!email||!password)return toast("Admin Email ও Password দিন");
+ // Demo-only local role check. Replace with Firebase Auth + Firestore role lookup.
+ const user=users.find(u=>u.email===email&&u.password===password&&["admin","super_admin"].includes(u.role));
+ if(!user){
+   return toast("Admin account পাওয়া যায়নি। Firebase Security Rules দিয়ে বাস্তবে role যাচাই করুন।");
+ }
+ currentUser=user;
+ localStorage.setItem("currentUser",JSON.stringify(user));
+ startApp();openPage("admin");renderAdmin();
+}
+function renderAdmin(){
+ if(!currentUser||!["admin","super_admin"].includes(currentUser.role))return;
+ adminRoleLabel.textContent=currentUser.role==="super_admin"?"👑 Super Admin Panel":"🛡️ Admin Panel";
+ superAdminActions.classList.toggle("hidden",currentUser.role!=="super_admin");
+ const mine=complaints;
+ statTotal.textContent=mine.length;
+ statPending.textContent=mine.filter(c=>!["Resolved","Closed"].includes(c.status)).length;
+ statProcessing.textContent=mine.filter(c=>["Processing","Under Review","Assigned"].includes(c.status)).length;
+ statResolved.textContent=mine.filter(c=>["Resolved","Closed"].includes(c.status)).length;
+}
+function adminComplaints(){
+ if(!["admin","super_admin"].includes(currentUser?.role))return toast("অনুমতি নেই");
+ adminUserList.innerHTML="";
+ adminComplaintList.innerHTML=complaints.map(c=>`<div class="complaint"><div class="complaint-head"><div><b>${escapeHtml(c.title)}</b><div class="complaint-id">${c.id}</div></div><span class="badge">${escapeHtml(c.status)}</span></div><p style="margin-top:8px">${escapeHtml(c.category)} • ${escapeHtml(c.priority)}</p><select class="input" onchange="adminStatus('${c.id}',this.value)"><option ${c.status==="Submitted"?"selected":""}>Submitted</option><option ${c.status==="Received"?"selected":""}>Received</option><option ${c.status==="Under Review"?"selected":""}>Under Review</option><option ${c.status==="Need More Information"?"selected":""}>Need More Information</option><option ${c.status==="Assigned"?"selected":""}>Assigned</option><option ${c.status==="Processing"?"selected":""}>Processing</option><option ${c.status==="Resolved"?"selected":""}>Resolved</option><option ${c.status==="Rejected"?"selected":""}>Rejected</option><option ${c.status==="Closed"?"selected":""}>Closed</option></select></div>`).join("")||'<div class="card">কোনো অভিযোগ নেই।</div>';
+}
+function adminStatus(id,status){
+ const c=complaints.find(x=>x.id===id);if(!c)return;
+ c.status=status;c.updates.push({status,date:new Date().toLocaleString("bn-BD"),message:"Admin কর্তৃক status পরিবর্তন করা হয়েছে"});
+ localStorage.setItem("complaints",JSON.stringify(complaints));toast("Status আপডেট হয়েছে");renderAdmin();
+}
+function adminUsers(){
+ if(currentUser?.role!=="super_admin")return toast("শুধু Super Admin user management করতে পারবেন");
+ adminComplaintList.innerHTML="";
+ adminUserList.innerHTML=users.map(u=>`<div class="complaint"><b>${escapeHtml(u.name)}</b><div class="complaint-id">${escapeHtml(u.email)}</div><p style="margin-top:6px">Role: ${escapeHtml(u.role)}</p><select class="input" onchange="changeRole('${u.id}',this.value)"><option value="member" ${u.role==="member"?"selected":""}>member</option><option value="admin" ${u.role==="admin"?"selected":""}>admin</option></select></div>`).join("")||'<div class="card">কোনো user নেই।</div>';
+}
+function changeRole(id,role){
+ if(currentUser?.role!=="super_admin")return toast("অনুমতি নেই");
+ const u=users.find(x=>x.id===id);if(!u)return;
+ u.role=role;localStorage.setItem("users",JSON.stringify(users));toast("User role আপডেট হয়েছে");adminUsers();
+}
+function showRegister(){loginBox.classList.add("hidden");adminLoginBox.classList.add("hidden");registerBox.classList.remove("hidden")}
+function showLogin(){registerBox.classList.add("hidden");adminLoginBox.classList.add("hidden");loginBox.classList.remove("hidden")}
+function registerUser(){
+ const name=regName.value.trim(),phone=regPhone.value.trim(),email=regEmail.value.trim(),password=regPassword.value,confirm=regConfirm.value;
+ if(!name||!email||!password)return toast("প্রয়োজনীয় তথ্য পূরণ করুন");
+ if(password!==confirm)return toast("পাসওয়ার্ড মিলছে না");
+ if(password.length<6)return toast("পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে");
+ if(users.some(u=>u.email===email))return toast("এই ইমেইল দিয়ে অ্যাকাউন্ট আছে");
+ const user={id:"U"+Date.now(),name,phone,email,password,district:regDistrict.value,upazila:regUpazila.value,address:regAddress.value,role:"member"};
+ users.push(user);localStorage.setItem("users",JSON.stringify(users));toast("অ্যাকাউন্ট তৈরি হয়েছে");showLogin();
+}
+function login(){
+ const email=loginEmail.value.trim(),password=loginPassword.value;
+ if(email==="admin@example.com"&&password==="admin123"){currentUser={id:"ADMIN",name:"Super Admin",email,role:"super_admin"};startApp();openPage("admin");return}
+ const user=users.find(u=>u.email===email&&u.password===password);
+ if(!user)return toast("ইমেইল অথবা পাসওয়ার্ড সঠিক নয়");
+ currentUser=user;localStorage.setItem("currentUser",JSON.stringify(user));startApp();
+}
+function forgotPassword(){toast("বাস্তব সংস্করণে Firebase Password Reset যুক্ত করতে হবে")}
+function logout(){currentUser=null;localStorage.removeItem("currentUser");mainApp.classList.add("hidden");authScreen.classList.remove("hidden");showLogin()}
+function startApp(){
+ authScreen.classList.add("hidden");mainApp.classList.remove("hidden");
+ welcomeName.textContent=(currentUser.name||"অতিথি")+" — স্বাগতম";
+ if(currentUser.role==="guest"){
+   document.getElementById("guestProfileActions").classList.remove("hidden");
+   document.getElementById("userProfileFields").classList.add("hidden");
+ }else{
+   document.getElementById("guestProfileActions").classList.add("hidden");
+   document.getElementById("userProfileFields").classList.remove("hidden");
+   loadProfile();
+ }
+ renderComplaints();
+ if(["admin","super_admin"].includes(currentUser?.role)) renderAdmin();
+}
+function openPage(page){document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));const target=document.getElementById(page+"Page");if(target)target.classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"})}
+function generateComplaintId(){return `BD-${new Date().getFullYear()}-${String(complaints.length+1).padStart(6,"0")}`}
+function submitComplaint(){
+ if(!currentUser||currentUser.role==="guest")return toast("অভিযোগ জমা দিতে আগে লগইন করুন");
+ const title=cTitle.value.trim(),category=cCategory.value,details=cDetails.value.trim();
+ if(!title||!category||!details)return toast("শিরোনাম, ধরন ও বিস্তারিত অভিযোগ পূরণ করুন");
+ const id=generateComplaintId();
+ const complaint={id,userId:currentUser.id,title,category,details,date:cDate.value,time:cTime.value,district:cDistrict.value,upazila:cUpazila.value,union:cUnion.value,area:cArea.value,place:cPlace.value,accused:cAccused.value,contact:cContact.value,witness:cWitness.value,evidence:cEvidenceInfo.value,anonymous:anonymous.value,priority:priority.value,status:"Submitted",createdAt:new Date().toISOString(),updates:[{status:"Submitted",date:new Date().toLocaleString("bn-BD"),message:"অভিযোগ সফলভাবে জমা হয়েছে"}]};
+ complaints.push(complaint);localStorage.setItem("complaints",JSON.stringify(complaints));toast("অভিযোগ জমা হয়েছে। ID: "+id);clearComplaintForm();openPage("myComplaints");renderComplaints();
+}
+function clearComplaintForm(){document.querySelectorAll("#complaintPage input,#complaintPage textarea").forEach(el=>el.value="")}
+function renderComplaints(){
+ const list=document.getElementById("complaintList");if(!list)return;
+ const mine=complaints.filter(c=>currentUser&&c.userId===currentUser.id);
+ if(!mine.length){list.innerHTML='<div class="card">এখনো কোনো অভিযোগ নেই।</div>';return}
+ list.innerHTML=mine.map(c=>`<div class="complaint"><div class="complaint-head"><div><b>${escapeHtml(c.title)}</b><div class="complaint-id">${c.id}</div></div><span class="badge">${escapeHtml(c.status)}</span></div><p style="margin-top:10px">${escapeHtml(c.category)}</p><p style="margin-top:5px;font-size:13px;color:#687572">অগ্রাধিকার: ${escapeHtml(c.priority)}</p><button class="secondary" onclick="showComplaint('${c.id}')">বিস্তারিত দেখুন</button></div>`).join("");
+}
+function filterComplaints(filter){
+ const mine=complaints.filter(c=>currentUser&&c.userId===currentUser.id);let filtered=mine;
+ if(filter==="pending")filtered=mine.filter(c=>!["Resolved","Closed"].includes(c.status));
+ if(filter==="processing")filtered=mine.filter(c=>["Processing","Under Review","Assigned"].includes(c.status));
+ if(filter==="resolved")filtered=mine.filter(c=>["Resolved","Closed"].includes(c.status));
+ const list=document.getElementById("complaintList");
+ list.innerHTML=filtered.map(c=>`<div class="complaint"><b>${escapeHtml(c.title)}</b><div class="complaint-id">${c.id}</div><span class="badge">${escapeHtml(c.status)}</span></div>`).join("")||'<div class="card">কোনো অভিযোগ পাওয়া যায়নি।</div>';
+}
+function trackComplaint(){
+ const id=trackingId.value.trim(),result=trackingResult,complaint=complaints.find(c=>c.id===id);
+ if(!complaint){result.innerHTML='<div class="card danger">অভিযোগ পাওয়া যায়নি।</div>';return}
+ if(currentUser&&complaint.userId!==currentUser.id&&!["admin","super_admin"].includes(currentUser.role)){result.innerHTML='<div class="card danger">এই অভিযোগ দেখার অনুমতি নেই।</div>';return}
+ result.innerHTML=`<div class="complaint"><div class="complaint-head"><div><b>${escapeHtml(complaint.title)}</b><div class="complaint-id">${complaint.id}</div></div><span class="badge">${escapeHtml(complaint.status)}</span></div><p style="margin-top:12px">ক্যাটাগরি: ${escapeHtml(complaint.category)}</p><p style="margin-top:5px">অগ্রাধিকার: ${escapeHtml(complaint.priority)}</p><div class="timeline">${complaint.updates.map(u=>`<div class="timeline-item"><b>${escapeHtml(u.status)}</b><p style="font-size:12px;color:#687572">${escapeHtml(u.date)}</p><p style="font-size:13px">${escapeHtml(u.message)}</p></div>`).join("")}</div></div>`;
+}
+function showComplaint(id){trackingId.value=id;openPage("tracking");trackComplaint()}
+function loadProfile(){if(!currentUser)return;profileName.textContent=currentUser.name||"ব্যবহারকারী";profileEmail.textContent=currentUser.email||"";if(currentUser.role==="guest")return;profilePhone.value=currentUser.phone||"";profileDistrict.value=currentUser.district||"";profileUpazila.value=currentUser.upazila||"";profileAddress.value=currentUser.address||""}
+function saveProfile(){
+ if(!currentUser)return;
+ currentUser.phone=profilePhone.value;currentUser.district=profileDistrict.value;currentUser.upazila=profileUpazila.value;currentUser.address=profileAddress.value;
+ const i=users.findIndex(u=>u.id===currentUser.id);if(i>=0){users[i]=currentUser;localStorage.setItem("users",JSON.stringify(users));localStorage.setItem("currentUser",JSON.stringify(currentUser))}
+ toast("প্রোফাইল আপডেট হয়েছে");
+}
+function toast(message){const el=document.getElementById("toast");el.textContent=message;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),3000)}
+function escapeHtml(value){return String(value||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+window.addEventListener("load",()=>{
+ const saved=localStorage.getItem("currentUser");
+ if(saved){
+   currentUser=JSON.parse(saved);
+ }else{
+   currentUser={id:"guest",name:"অতিথি",email:"",role:"guest"};
+ }
+ authScreen.classList.add("hidden");
+ mainApp.classList.remove("hidden");
+ openPage("home");
+ welcomeName.textContent=(currentUser.name||"অতিথি")+" — স্বাগতম";
+ renderComplaints();
+});</script>
+</div>
+</body>
+</html>
